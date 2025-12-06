@@ -4,11 +4,10 @@ import fs from "fs/promises";
 // creating project controller
 
 export const createProjects = async (req, res) => {
-  console.log("=== DEBUG INFO ===");
-  console.log("req.file:", req.file);
+
 
   const { projectName, description, techs, githubLink, isLive } = req.body;
-  // const imageFile = req.file; // Removed unused variable
+
 
   if (!projectName || !description || !techs || !githubLink) {
     return res
