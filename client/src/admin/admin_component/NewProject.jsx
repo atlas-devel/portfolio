@@ -217,6 +217,15 @@ const NewProject = ({ setaddProject }) => {
                           />
                           <span>Node js</span>
                         </label>
+                        <label className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            onChange={handleTechs}
+                            value="Node js"
+                            className="accent-green-600"
+                          />
+                          <span>Postgresql</span>
+                        </label>
                       </div>
                     </div>
                   </div>
