@@ -66,7 +66,7 @@ const Project = () => {
           duration: 0.4,
           type: "tween",
         }}
-        className="text-4xl w-full  text-center font-extrabold  mt-12 text-white/85 uppercase tracking-wide"
+        className="text-4xl w-full  text-center font-extrabold  mt-12 text-gray-300 uppercase tracking-wide"
       >
         Recent <span className="text-[#02a94c]">works </span>
         <hr className="w-35 m-[18px_auto] border-t-2 border-[#02a94c]/50" />
@@ -80,7 +80,7 @@ const Project = () => {
             delay: 0.4,
             type: "tween",
           }}
-          className=" mt-5 text-start text-lg md:mx-auto md:mt-10 md:text-center text-gray-400 text-md max-w-4xl  mb-10"
+          className=" mt-5 text-start text-md md:mx-auto md:mt-10 md:text-center text-gray-400 text-md max-w-4xl  mb-10"
         >
           Explore my journey through code. Each project represents a unique
           challenge, innovative solution, and a step forward in my development
@@ -183,7 +183,7 @@ const Project = () => {
                           </a>
                         ) : (
                           <a
-                            href={item.githubLink}
+                            href={`https://${item.githubLink}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className=" rounded-sm hover:bg-[#0f192d] cursor-pointer border border-[#4ad3a8] px-5 py-2  text-white uppercase text-md font-semibold "
@@ -233,8 +233,8 @@ const Project = () => {
                       {/* view live project */}
                       {item.isLive ? (
                         <a
-                          href={item.liveLink}
-                          target="_black"
+                          href={`https://${item.liveLink}`}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="cursor-pointer w-full  flex items-center justify-center gap-2 py-2 bg-green-600 duration-400 hover:bg-green-500 text-white rounded-lg"
                         >

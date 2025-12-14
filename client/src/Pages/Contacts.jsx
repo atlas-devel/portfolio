@@ -61,7 +61,7 @@ const Contacts = () => {
         initial={{ opacity: 0, x: -200 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, type: "tween" }}
-        className="text-4xl font-extrabold text-center text-white/90 uppercase tracking-wide"
+        className="text-4xl font-extrabold text-center text-gray-300 uppercase tracking-wide"
       >
         Contact <span className="text-[#02a94c]">Me</span>
       </motion.h2>
@@ -72,7 +72,7 @@ const Contacts = () => {
         initial={{ opacity: 0, x: -200 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, type: "tween" }}
-        className="w-full lg:w-3/4 mx-auto text-gray-400 text-center text-lg"
+        className="w-full lg:w-3/4 mx-auto text-gray-400 text-center text-md"
       >
         I’m always open to new opportunities, collaborations, or just a friendly
         chat about tech. Whether you have a project in mind or want to connect,
