@@ -21,10 +21,7 @@ app.use(
   cors({
     credentials: true,
     // Update CORS origin for production
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://portfolio-2-rkft.onrender.com"
-        : "http://localhost:5173",
+    origin: ["https://portfolio-2-rkft.onrender.com", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 );
