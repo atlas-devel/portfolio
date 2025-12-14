@@ -183,7 +183,7 @@ const Project = () => {
                           </a>
                         ) : (
                           <a
-                            href={`https://${item.githubLink}`}
+                            href={`${item.githubLink}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className=" rounded-sm hover:bg-[#0f192d] cursor-pointer border border-[#4ad3a8] px-5 py-2  text-white uppercase text-md font-semibold "
