@@ -11,29 +11,26 @@ const HeroContent = () => {
   const navigate = useNavigate();
 
   return (
-    <section
-      className="min-h-screen mb-10
-    "
-    >
+    <section className="min-h-screen mb-10">
       <motion.div
         id="home"
         initial="hidden"
         animate="visible"
-        className="flex mt-20 py-4 lg:py-10 border rounded-md border-[#02a94c]/40  flex-col-reverse md:flex-row items-center w-full z-0 relative overflow-hidden"
+        className="flex mt-20 py-4 lg:py-10 border rounded-md border-[#02a94c]/40 flex-col-reverse md:flex-row items-center w-full z-0 relative overflow-hidden"
       >
         {/* Animated background gradients */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#02a94c]/5 via-transparent  to-cyan-600/5 pointer-events-none" />
-        <div className="absolute top-20 -left-20 w-72  h-72 bg-[#02a94c]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#02a94c]/5 via-transparent to-cyan-600/5 pointer-events-none" />
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-[#02a94c]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-20-right-20 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="h-full w-full flex flex-col gap-6  m-auto text-start px-6 md:px-12 lg:px-16 relative z-10">
+        <div className="h-full w-full flex flex-col gap-6 m-auto text-start px-6 md:px-12 lg:px-16 relative z-10">
           <motion.div
             variants={slideInFromTop}
-            className="py-3 sm:py-4 px-4  sm:px-6 welcome-box border border-[#0eac7ab1]/50 bg-[#0eac7a]/5 backdrop-blur-sm rounded-full opacity-[0.9] inline-flex items-center gap-3 w-fit shadow-lg shadow-[#02a94c]/10"
+            className="py-3 sm:py-4 px-4 sm:px-6 welcome-box border border-[#0eac7ab1]/50 bg-[#0eac7a]/5 backdrop-blur-sm rounded-full opacity-[0.9] inline-flex items-center gap-3 w-fit shadow-lg shadow-[#02a94c]/10"
           >
             <HiSparkles className="text-[#22d096c2] h-5 w-5 animate-pulse" />
             <h1 className="welcome-text text-[13px] font-medium tracking-wide text-gray-300">
-              Web Developer Portfolio
+              Full-Stack Developer Portfolio
             </h1>
           </motion.div>
 
@@ -53,21 +50,27 @@ const HeroContent = () => {
               >
                 <span className="hidden sm:inline">IRAKARAMA </span>
                 <span className="hidden sm:inline">Jean </span>
-                <span className="hidden sm:inline">Francois </span>
-                <span className="text-wrap sm:hidden">IRAKARAMA Jean Francois Leon</span>
+                <span className="hidden sm:inline">Francois Leon </span>
+                <span className="text-wrap sm:hidden">IRAKARAMA</span>
               </motion.span>
 
-              <div className="flex flex-wrap items-center gap-3 mt-6 text-2xl sm:text-4xl md:text-5xl">
-                <span className="text-gray-300/95 font-semibold">I am</span>
+              <div className="lg:inline-flex lg:flex-wrap overflow-hidden justify-center  items-center gap-3 mt-6 ">
+                <span className="flex self-start  text-gray-300">I am </span>
                 <Typewriter
                   options={{
-                    strings: ["A Web Developer", "IT Technician"],
+                    strings: [
+                      "Full-Stack Developer",
+                      "MERN Stack Developer",
+                      "PERN Stack Developer",
+                      "IT Student",
+                    ],
                     autoStart: true,
                     delay: 200,
                     loop: true,
                     wrapperClassName:
-                      "text-transparent inline-block bg-clip-text bg-gradient-to-r from-[#02a94c] to-cyan-600 font-bold",
-                    cursorClassName: "text-cyan-600",
+                      "text-transparent  lg:text-xl bg-clip-text bg-gradient-to-r from-[#02a94c] to-cyan-600 font-bold",
+                    cursorClassName:
+                      "text-cyan-600 inline-block scale-y-75 origin-bottom",
                   }}
                 />
               </div>
@@ -79,22 +82,26 @@ const HeroContent = () => {
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7 }}
-              className={`text-base sm:text-lg text-gray-400/90 leading-relaxed mt-4 ${
+              className={`text-base sm:text-lg text-gray-400/90 leading-relaxed md:mt-4 ${
                 readMore ? "line-clamp-none" : "line-clamp-3 lg:line-clamp-none"
               }`}
             >
-              I'm currently an IT student at RP College of Kigali, passionate
-              about building clean, responsive, and user-friendly web
-              applications. I specialize in tools like{" "}
+              I'm a Year 2 IT student at{" "}
+              <span className="text-[#02a94c] font-medium">IPRC Kigali</span>{" "}
+              with hands-on experience building full-stack web applications. I
+              specialize in{" "}
               <span className="text-[#02a94c] font-medium">
-                HTML, CSS, JavaScript, React, Node.js, Express,
+                MERN and PERN stacks
               </span>{" "}
-              and{" "}
-              <span className="text-[#02a94c] font-medium">Tailwind CSS</span>.
-              I'm always eager to learn and grow, and I approach every project
-              with curiosity, care, and a strong focus on quality. Thanks for
-              stopping by — I'd truly love the opportunity to connect and build
-              something great together!
+              — React, Node.js, Express, PostgreSQL, and MongoDB. Recently, I
+              led web development for an IoT dashboard project that earned{" "}
+              <span className="text-[#02a94c] font-medium">
+                3rd place recognition
+              </span>{" "}
+              and was presented to the Korean Ambassador. I'm passionate about
+              solving real-world problems through code and always eager to learn
+              new technologies. Currently expanding my skills in TypeScript and
+              Python. Let's build something great together!
             </motion.p>
             <button
               onClick={() => setreadMore((prev) => !prev)}

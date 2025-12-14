@@ -26,7 +26,7 @@ const NavBar = () => {
           </p>
           <span className="text-white/80">Leon</span>
         </div>
-        <ul className="hidden lg:flex gap-6 font-semibold text-md">
+        <ul className="hidden lg:flex gap-6 font-semibold text-md  ">
           {navbar.map((n, i) => {
             return (
               <a href={`#${n.link}`} key={i + 1}>
@@ -34,10 +34,10 @@ const NavBar = () => {
                   onClick={() => {
                     setactiveTab(n.name);
                   }}
-                  className={`hover:border-b-2 cursor-pointer transform-border ${
+                  className={`hover:border-b-2 cursor-pointer font-medium ${
                     activeTab === n.name
                       ? "text-[#02a94c] border-b-2 border-[#02a94c]"
-                      : "text-gray-300"
+                      : "text-gray-300 "
                   }duration-300 ease-in-out hover:text-[#02a94c] hover:border-[#02a94c] rounded-2xl px-2`}
                 >
                   {n.name}
@@ -56,7 +56,7 @@ const NavBar = () => {
 
           <p
             onClick={() => {
-              window.open("/Resume.pdf", "_blank");
+              window.open("/Jean Francois Leon IRAKARAMA - CV.pdf", "_blank");
             }}
             className="inline-block  bg-[#02a94c] duration-300 hover:bg-transparent hover:outline-[#02a94c] hover:text-[#10b981] hover:outline px-3 p-1 text-lg rounded-sm cursor-pointer  text-black font-semibold tex-md"
           >

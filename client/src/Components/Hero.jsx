@@ -5,6 +5,7 @@ import AboutMe from "../Pages/AboutMe";
 import Skills from "../Pages/Skills";
 import Project from "../Pages/Project";
 import Contacts from "../Pages/Contacts";
+import Tools from "../Pages/../Components/Tools";
 import Experience from "./Experience";
 
 const Hero = () => {
@@ -14,6 +15,7 @@ const Hero = () => {
       <HeroContent />
       <AboutMe />
       <Skills />
+      <Tools />
       <Experience />
       <Project />
       <Contacts />
