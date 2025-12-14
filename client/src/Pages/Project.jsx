@@ -43,12 +43,10 @@ const Project = () => {
     });
   };
 
-  const filterProjects = (e) => {
-    if (e.target.textContent !== "All") {
+  const filterProjects = (label) => {
+    if (label !== "All") {
       const renderProject = allProjects.filter((proj) =>
-        proj.techs.some(
-          (item) => item.toLowerCase() === e.target.textContent.toLowerCase()
-        )
+        proj.techs.some((item) => item.toLowerCase() === label.toLowerCase())
       );
       setProjectsRender(renderProject);
     } else {
@@ -93,9 +91,9 @@ const Project = () => {
       <div className="flex flex-wrap gap-2 2md:gap-6 justify-center mb-20">
         {projectFilters.map((item) => (
           <span
-            onClick={(e) => {
+            onClick={() => {
               filterByStack(item.id);
-              filterProjects(e);
+              filterProjects(item.label);
             }}
             key={item.id}
             className={`${
@@ -124,6 +122,7 @@ const Project = () => {
 
             .slice(allProject, learnMore ? projectsRender.length : projectLimit)
             .map((item) => {
+              console.log(item);
               return (
                 <div
                   key={item._id}
@@ -136,7 +135,7 @@ const Project = () => {
                   >
                     <div className="relative w-full bg-gradient-to-bl from-white/20 to-0 h-full">
                       {item.isLive ? (
-                        <p className="absolute  z-10 top-0 right-0 m-2 text-sm text-green-400  bg-green-500/20 inline-block px-2 rounded-full h-full border-green-400/50">
+                        <p className="absolute  z-10 top-0 right-0 m-2 text-sm text-green-400  bg-green-500/20 inline-block px-2 rounded-full border border-green-400/50">
                           Live
                         </p>
                       ) : (
@@ -148,7 +147,7 @@ const Project = () => {
                         <img
                           src={`${item.imageFile}`}
                           alt=""
-                          className="object-cover w-full h-full brightness-75 duration-400 ease-in-out cursor-pointer hover:brightness-95"
+                          className="object-fill w-full h-full brightness-75 duration-400 ease-in-out cursor-pointer hover:brightness-95"
                         />
                       ) : (
                         <div className=" text-gray-400  flex items-center h-full w-full">
@@ -175,7 +174,7 @@ const Project = () => {
                       >
                         {item.isLive ? (
                           <a
-                            href={item.liveLink}
+                            href={`https://${item.liveLink}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className=" rounded-sm hover:bg-[#0f192d] cursor-pointer border border-[#4ad3a8] px-5 py-2  text-white uppercase text-md font-semibold "
