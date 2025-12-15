@@ -55,7 +55,7 @@ const HeroContent = () => {
                 <span className="text-wrap sm:hidden block">Leon</span>
               </motion.span>
 
-              <div className="lg:inline-flex lg:flex-wrap overflow-hidden justify-center  items-center gap-3 mt-2 md:mt-6 ">
+              <div className="lg:inline-flex lg:flex-wrap overflow-hidden justify-center  items-center gap-3 mt-1 md:mt-6 ">
                 <span className="flex self-start  text-gray-300">I am </span>
                 <Typewriter
                   options={{
