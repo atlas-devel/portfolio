@@ -42,7 +42,9 @@ const MobileNav = () => {
         ))}
         <a
           className="text-gray-300 font-semibold text-xl  py-2 px-10 active:text-[#0eac79] cursor-pointer"
-          onClick={() => window.open("/Resume.pdf", "_blank")}
+             onClick={() => {
+              window.open("/Jean Francois Leon IRAKARAMA - CV.pdf", "_blank");
+            }}
         >
           Resume
         </a>
