@@ -52,6 +52,7 @@ const HeroContent = () => {
                 <span className="hidden sm:inline">Jean </span>
                 <span className="hidden sm:inline">Francois Leon </span>
                 <span className="text-wrap sm:hidden">IRAKARAMA</span>
+                <span className="text-wrap sm:hidden">Leon</span>
               </motion.span>
 
               <div className="lg:inline-flex lg:flex-wrap overflow-hidden justify-center  items-center gap-3 mt-6 ">
