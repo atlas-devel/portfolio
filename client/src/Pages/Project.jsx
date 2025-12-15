@@ -122,7 +122,7 @@ const Project = () => {
 
             .slice(allProject, learnMore ? projectsRender.length : projectLimit)
             .map((item) => {
-              console.log(item);
+            
               return (
                 <div
                   key={item._id}
