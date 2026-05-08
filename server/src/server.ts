@@ -15,6 +15,11 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = [
+  "https://portfolio-2-rkft.onrender.com",
+  "http://localhost:5173",
+  "http://localhost:4173",
+];
 app.set("trust proxy", 1);
 
 // Setup augmentation for express interface
@@ -24,8 +29,7 @@ import "./types/index";
 app.use(
   cors({
     credentials: true,
-    // Update CORS origin for production
-    origin: ["https://portfolio-2-rkft.onrender.com", "http://localhost:5173"],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   }),
 );

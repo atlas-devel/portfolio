@@ -23,6 +23,8 @@ interface CreateProjectForm {
 
 const NewProject: React.FC<NewProjectProps> = ({ setaddProject, onSuccess }) => {
   const { baseUrl, getProjectData } = useContext(AdminContextAuth);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const [createProject, setcreateProject] = useState<CreateProjectForm>({
     projectName: "",
@@ -58,6 +60,8 @@ const NewProject: React.FC<NewProjectProps> = ({ setaddProject, onSuccess }) => 
 
   const submitProject = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setErrorMessage("");
+    setSubmitting(true);
     try {
       const formData = new FormData();
       formData.append("projectName", createProject.projectName);
@@ -75,19 +79,22 @@ const NewProject: React.FC<NewProjectProps> = ({ setaddProject, onSuccess }) => 
         credentials: "include",
         body: formData,
       });
-      if (!res.ok) {
-        throw new Error(
-          `Failed to add a project: ${res.status} ${res.statusText}`
-        );
-      }
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         await getProjectData();
         onSuccess?.(createProject.projectName);
         setaddProject(false);
+        return;
       }
+      setErrorMessage(
+        data?.message ||
+          `Failed to upload project: ${res.status} ${res.statusText}`,
+      );
     } catch (error) {
       console.log(error);
+      setErrorMessage("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
   const navigate = useNavigate();
@@ -285,18 +292,27 @@ const NewProject: React.FC<NewProjectProps> = ({ setaddProject, onSuccess }) => 
               </select>
             </div>
 
+            <div className="flex justify-between mx-4 pt-1">
+              {errorMessage && (
+                <p className="text-sm text-red-400">{errorMessage}</p>
+              )}
+            </div>
+
             <div className="flex justify-between mx-4">
               <button
+                type="button"
                 onClick={() => setaddProject(false)}
                 className="py-1.5 px-2 md:px-10 rounded-md border border-white/10 bg-gray-600/40 cursor-pointer hover:bg-gray-700 duration-400"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={submitProject}
-                className="py-1.5 px-2 md:px-6 rounded-md bg-green-600 hover:bg-green-500 cursor-pointer duration-400"
+                disabled={submitting}
+                className="py-1.5 px-2 md:px-6 rounded-md bg-green-600 hover:bg-green-500 cursor-pointer duration-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Submit Project
+                {submitting ? "Uploading..." : "Submit Project"}
               </button>
             </div>
           </div>
