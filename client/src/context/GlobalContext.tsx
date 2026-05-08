@@ -84,7 +84,26 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
       }
       const data = await res.json();
       if (data.success) {
-        setAllProjects(data.projects);
+        // Ensure projects are displayed newest-first.
+        const projects = Array.isArray(data.projects) ? data.projects.slice() : [];
+        const getTimestamp = (p: any) => {
+          if (p?.createdAt) {
+            const t = Date.parse(p.createdAt);
+            if (!Number.isNaN(t)) return t;
+          }
+          // Fallback: derive timestamp from Mongo ObjectId if available
+          if (p?._id && typeof p._id === "string" && p._id.length >= 8) {
+            try {
+              return parseInt(p._id.substring(0, 8), 16) * 1000;
+            } catch (e) {
+              return 0;
+            }
+          }
+          return 0;
+        };
+
+        projects.sort((a: any, b: any) => getTimestamp(b) - getTimestamp(a));
+        setAllProjects(projects);
       }
     } catch (err) {
       console.error("failed to fetchprojects: " + err);
