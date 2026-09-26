@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -9,6 +10,8 @@ import React, {
 export interface IProject {
   _id: string;
   projectName: string;
+  role?: string;
+  displayOrder?: number;
   description: string;
   techs: string[];
   githubLink: string;
@@ -33,6 +36,7 @@ export interface ICertificate {
   date: string;
   description: string;
   imageUrl?: string;
+  displayOrder?: number;
 }
 
 export interface IGlobalContext {
@@ -54,9 +58,13 @@ export interface IGlobalContext {
   lastScrollY: React.MutableRefObject<number>;
 }
 
-export const GlobalContext = createContext<IGlobalContext | undefined>(
-  undefined,
-);
+export const GlobalContext = createContext<IGlobalContext | undefined>(undefined);
+
+export const useGlobalContext = (): IGlobalContext => {
+  const context = useContext(GlobalContext);
+  if (!context) throw new Error("useGlobalContext must be used inside ContextProvider");
+  return context;
+};
 
 interface ContextProviderProps {
   children: ReactNode;
@@ -73,7 +81,6 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const [baseUrl] = useState<string>(import.meta.env.VITE_BACKEND_URL || "");
 
   const getProjectData = async () => {
-    if (!baseUrl) return;
     try {
       const res = await fetch(`${baseUrl}/api/projects/all-projects`, {
         method: "get",
@@ -91,14 +98,6 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
             const t = Date.parse(p.createdAt);
             if (!Number.isNaN(t)) return t;
           }
-          // Fallback: derive timestamp from Mongo ObjectId if available
-          if (p?._id && typeof p._id === "string" && p._id.length >= 8) {
-            try {
-              return parseInt(p._id.substring(0, 8), 16) * 1000;
-            } catch (e) {
-              return 0;
-            }
-          }
           return 0;
         };
 
@@ -111,7 +110,6 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   };
 
   const getCertificateData = async () => {
-    if (!baseUrl) return;
     try {
       const res = await fetch(`${baseUrl}/api/certificates/all`, {
         method: "get",
@@ -119,14 +117,13 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
       });
       if (!res.ok) throw new Error("failed to connect DB");
       const data = await res.json();
-      if (data.success) setAllCertificates(data.certificates);
+      if (data.success && Array.isArray(data.certificates)) setAllCertificates(data.certificates);
     } catch (err) {
       console.error("failed to fetch certificates: " + err);
     }
   };
 
   const recordVisit = async () => {
-    if (!baseUrl) return;
     if (window.location.pathname !== "/") return;
 
     const todayKey = new Date().toISOString().slice(0, 10);

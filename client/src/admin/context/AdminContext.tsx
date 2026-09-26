@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { ICertificate, IProject } from "../../context/GlobalContext";
 
 export interface IUserData {
@@ -36,6 +36,12 @@ export interface IVisitorStats {
 }
 
 export const AdminContextAuth = createContext<IAdminContextAuth | undefined>(undefined);
+
+export const useAdminContext = (): IAdminContextAuth => {
+  const context = useContext(AdminContextAuth);
+  if (!context) throw new Error("useAdminContext must be used inside AuthProvider");
+  return context;
+};
 
 interface AuthProviderProps {
   children: ReactNode;

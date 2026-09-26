@@ -1,4 +1,4 @@
-export function slideInFromLeft(delay) {
+export function slideInFromLeft(delay: number) {
   return {
     hidden: { x: -100, opacity: 0 },
     visible: {
@@ -12,7 +12,7 @@ export function slideInFromLeft(delay) {
   };
 }
 
-export function slideInFromRight(delay) {
+export function slideInFromRight(delay: number) {
   return {
     hidden: { x: 100, opacity: 0 },
     visible: {

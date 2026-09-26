@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState } from "react";
 import Hero from "./components/Hero";
 import ContextProvider from "./context/GlobalContext";
 import ScrollProgress from "./components/ScrollProgress";
@@ -7,11 +7,11 @@ import Loader from "./components/Loader";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Login from "./admin/components/Login";
 import DashBoard from "./admin/components/DashBoard";
-import { AdminContextAuth } from "./admin/context/AdminContext";
+import { useAdminContext } from "./admin/context/AdminContext";
 import { ToastContainer } from "react-toastify";
 
 const App = () => {
-  const { userData, isloggedin } = useContext(AdminContextAuth);
+  const { userData, isloggedin } = useAdminContext();
   const [isLoading, setisLoading] = useState(true);
   const location = useLocation();
   if (isLoading && !location.pathname.startsWith("/auth/secret")) {
