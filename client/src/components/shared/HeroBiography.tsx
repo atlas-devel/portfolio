@@ -12,7 +12,7 @@ const HeroBiography = () => {
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7 }}
-        className={`mt-4 text-sm leading-relaxed text-gray-400/90 sm:text-base ${expanded ? "line-clamp-none" : "line-clamp-3 lg:line-clamp-none"}`}
+        className={`mt-1 md:mt-3 text-sm leading-relaxed text-gray-400/90 sm:text-base ${expanded ? "line-clamp-none" : "line-clamp-3 lg:line-clamp-none"}`}
       >
         I am a final-year Information Technology student at{" "}
         <span className="font-medium text-[#02a94c]">RP College of Kigali</span>
