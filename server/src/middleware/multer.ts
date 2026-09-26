@@ -27,7 +27,9 @@ const createUpload = (target: UploadTarget) => {
           target === "certificates"
             ? ["jpg", "jpeg", "png", "gif", "webp", "pdf"]
             : ["jpg", "jpeg", "png", "gif", "webp"],
-        transformation: isImage ? [{ width: 1920, quality: "auto" }] : undefined,
+        transformation: isImage
+          ? [{ width: 1600, crop: "limit", quality: "auto", fetch_format: "auto" }]
+          : undefined,
       };
     },
   });

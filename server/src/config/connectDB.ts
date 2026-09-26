@@ -1,17 +1,18 @@
-import mongoose from "mongoose";
+import prisma from "./prisma";
 
 const connectDB = async (): Promise<void> => {
   try {
-    if (!process.env.CONN_STRING) {
-      throw new Error("Missing CONN_STRING in environment variables");
+    if (!process.env.POSTGRESQL_URL) {
+      throw new Error("Missing POSTGRESQL_URL in environment variables");
     }
-    await mongoose.connect(process.env.CONN_STRING);
-    console.log(`Connected to MongoDB: ${mongoose.connection.host}`);
+    await prisma.$connect();
+    await prisma.$queryRaw`SELECT 1`;
+    console.log("Connected to PostgreSQL");
   } catch (err) {
     if (err instanceof Error) {
-      console.error(`Error connecting to MongoDB: ${err.message}`);
+      console.error(`Error connecting to PostgreSQL: ${err.message}`);
     } else {
-      console.error("Unknown error connecting to MongoDB");
+      console.error("Unknown error connecting to PostgreSQL");
     }
     process.exit(1);
   }

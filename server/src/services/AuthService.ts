@@ -1,6 +1,12 @@
 import { adminRepository } from "../repositories/AdminRepository";
 import { IAdmin } from "../models/AdminAuth";
 import jwt from "jsonwebtoken";
+import { verifyPassword } from "../utils/password";
+
+const publicAdmin = (admin: IAdmin): IAdmin => {
+  const { password: _password, ...safeAdmin } = admin;
+  return safeAdmin;
+};
 
 export const authService = {
   async login(
@@ -11,13 +17,13 @@ export const authService = {
       throw new Error("Validation: all fields are required");
     }
 
-    const userAdmin = await adminRepository.findByEmail(email);
+    const userAdmin = await adminRepository.findByEmail(email.trim().toLowerCase());
 
     if (!userAdmin) {
       throw new Error("NotFound: admin not found");
     }
 
-    if (password !== userAdmin.password) {
+    if (!(await verifyPassword(password, userAdmin.password ?? ""))) {
       throw new Error("Validation: incorrect password");
     }
 
@@ -28,7 +34,7 @@ export const authService = {
       expiresIn: "24h",
     });
 
-    return { admin: userAdmin, token };
+    return { admin: publicAdmin(userAdmin), token };
   },
 
   async getUserData(userId: string): Promise<IAdmin> {
@@ -39,6 +45,6 @@ export const authService = {
     if (!admin) {
       throw new Error("NotFound: user unauthorized");
     }
-    return admin;
+    return publicAdmin(admin);
   }
 };

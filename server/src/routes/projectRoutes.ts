@@ -1,25 +1,14 @@
 import express from "express";
-import {
-  getProjects,
-  createProjects,
-  deleteProject,
-  updateProject,
-  singleProject,
-} from "../controllers/ProjectController";
+import { deleteProject, createProjects, updateProject } from "../controllers/ProjectController";
+import { getProjects, singleProject } from "../controllers/ProjectQueryController";
 import { projectUploads } from "../middleware/multer";
 import { authenticateUser } from "../middleware/authMiddleware";
 
-const ProjectRouter = express.Router();
+const projectRouter = express.Router();
+projectRouter.post("/upload", authenticateUser, projectUploads.single("image"), createProjects);
+projectRouter.get("/all-projects", getProjects);
+projectRouter.delete("/remove/:id", authenticateUser, deleteProject);
+projectRouter.get("/:projectId", singleProject);
+projectRouter.patch("/update/:projectId", authenticateUser, projectUploads.single("image"), updateProject);
 
-ProjectRouter.post("/upload", authenticateUser, projectUploads.single("image"), createProjects);
-ProjectRouter.get("/all-projects", getProjects);
-ProjectRouter.delete("/remove/:id", authenticateUser, deleteProject);
-ProjectRouter.get("/:projectId", singleProject);
-ProjectRouter.patch(
-  "/update/:projectId",
-  authenticateUser,
-  projectUploads.single("image"),
-  updateProject,
-);
-
-export default ProjectRouter;
+export default projectRouter;
