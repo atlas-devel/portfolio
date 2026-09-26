@@ -1,17 +1,15 @@
+import "dotenv/config";
 import express from "express";
 import connectDB from "./config/connectDB";
 import ProjectRouter from "./routes/projectRoutes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import AuthRoute from "./routes/AuthRouter";
-import path from "path";
 import analyticsRouter from "./routes/analyticsRoutes";
+import certificateRouter from "./routes/certificateRoutes";
+import contactRouter from "./routes/contactRoutes";
 
-// Only use dotenv in development
-if (process.env.NODE_ENV !== "production") {
-  const dotenv = require("dotenv");
-  dotenv.config();
-}
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,7 +17,8 @@ const allowedOrigins = [
   "https://portfolio-2-rkft.onrender.com",
   "http://localhost:5173",
   "http://localhost:4173",
-];
+  process.env.CLIENT_URL,
+].filter((origin): origin is string => Boolean(origin));
 app.set("trust proxy", 1);
 
 // Setup augmentation for express interface
@@ -39,8 +38,9 @@ app.use(express.json());
 // Routes
 app.use("/api/projects", ProjectRouter);
 app.use("/api/portfolio", AuthRoute);
-app.use("/api/certificates", require("./routes/certificateRoutes").default);
+app.use("/api/certificates", certificateRouter);
 app.use("/api/analytics", analyticsRouter);
+app.use("/api/contact", contactRouter);
 
 // Connect to DB and Start Listening
 connectDB().then(() => {

@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const Loader = ({ isLoading, setisLoading }) => {
+interface LoaderProps {
+  isLoading: boolean;
+  setisLoading: Dispatch<SetStateAction<boolean>>;
+}
+const Loader = ({ isLoading, setisLoading }: LoaderProps) => {
   const fullText = "welcome to my portfolio";
   const [displayText, setDisplayText] = useState("");
   const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   useEffect(() => {
+    if (!isLoading) return;
     let index = 0;
     const interval = setInterval(() => {
       if (index < fullText.length) {
@@ -21,7 +26,7 @@ const Loader = ({ isLoading, setisLoading }) => {
     }, 150);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isLoading, setisLoading]);
   return (
     <div className="w-full flex flex-col items-center justify-center min-h-screen">
       <div>

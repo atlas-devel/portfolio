@@ -1,11 +1,10 @@
 import { easeInOut, motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
-import { useContext } from "react";
-import { GlobalContext } from "../context/GlobalContext";
+import { useGlobalContext } from "../context/GlobalContext";
 
 const MsgSentToast = () => {
-  const { showToast, setShowToast } = useContext(GlobalContext);
-  const { toastInfo, setToastInfo } = useContext(GlobalContext);
+  const { showToast, setShowToast } = useGlobalContext();
+  const { toastInfo } = useGlobalContext();
   const { message, detail, color, Icon, iconBg } = toastInfo;
 
   if (showToast) {

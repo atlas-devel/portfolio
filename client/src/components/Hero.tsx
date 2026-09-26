@@ -1,6 +1,5 @@
 import HeroContent from "./HeroContent";
 import NavBar from "./NavBar";
-import { GlobalContext } from "../context/GlobalContext";
 import AboutMe from "../pages/AboutMe";
 import Skills from "../pages/Skills";
 import Project from "../pages/Project";
@@ -8,6 +7,7 @@ import Contacts from "../pages/Contacts";
 import Tools from "./Tools";
 import Experience from "./Experience";
 import Certificates from "./Certificates";
+import Background from "./Background";
 
 const Hero = () => {
   return (
@@ -18,8 +18,9 @@ const Hero = () => {
       <Skills />
       <Tools />
       <Experience />
-      <Certificates />
       <Project />
+      <Certificates />
+      <Background />
       <Contacts />
     </div>
   );

@@ -38,3 +38,6 @@ client/.env.local
 # Optional: OS-specific junk
 Thumbs.db
 server/projectUploads/
+
+# docs
+./MIGRATION_GUIDE.md
