@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@splinetool/react-spline": "^4.1.0",
     "@tailwindcss/vite": "^4.1.10",
     "axios": "^1.12.1",
