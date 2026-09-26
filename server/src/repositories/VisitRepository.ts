@@ -1,41 +1,52 @@
-import VisitCounterModel, { IVisitCounter } from "../models/VisitCounterModel";
-import VisitEventModel, { IVisitEvent } from "../models/VisitEventModel";
+import prisma from "../config/prisma";
+import { IVisitCounter } from "../models/VisitCounterModel";
+import { IVisitEvent } from "../models/VisitEventModel";
 
 export const visitRepository = {
-  async findVisitEvent(dateKey: string, fingerprint: string): Promise<IVisitEvent | null> {
-    return await VisitEventModel.findOne({ dateKey, fingerprint });
+  async findVisitEvent(
+    dateKey: string,
+    fingerprint: string,
+  ): Promise<IVisitEvent | null> {
+    const event = await prisma.visitEvent.findUnique({
+      where: { dateKey_fingerprint: { dateKey, fingerprint } },
+    });
+    return event ? { ...event, _id: event.id } : null;
   },
 
   async createVisitEvent(data: Partial<IVisitEvent>): Promise<IVisitEvent> {
-    return await VisitEventModel.create(data);
+    const { _id, createdAt, updatedAt, ...eventData } = data;
+    const event = await prisma.visitEvent.create({
+      data: eventData as Parameters<typeof prisma.visitEvent.create>[0]["data"],
+    });
+    return { ...event, _id: event.id };
   },
 
   async incrementDailyCounter(dateKey: string): Promise<IVisitCounter | null> {
-    return await VisitCounterModel.findOneAndUpdate(
-      { dateKey },
-      { $inc: { count: 1 } },
-      { new: true, upsert: true, setDefaultsOnInsert: true },
-    );
+    const counter = await prisma.visitCounter.upsert({
+      where: { dateKey },
+      create: { dateKey, count: 1 },
+      update: { count: { increment: 1 } },
+    });
+    return { ...counter, _id: counter.id };
   },
 
   async getTotalVisitors(): Promise<number> {
-    const totals = await VisitCounterModel.aggregate<{ total: number }>([
-      { $group: { _id: null, total: { $sum: "$count" } } },
-    ]);
-
-    return totals[0]?.total ?? 0;
+    const totals = await prisma.visitCounter.aggregate({
+      _sum: { count: true },
+    });
+    return totals._sum.count ?? 0;
   },
 
   async getDailyCount(dateKey: string): Promise<number> {
-    const doc = await VisitCounterModel.findOne({ dateKey });
+    const doc = await prisma.visitCounter.findUnique({ where: { dateKey } });
     return doc?.count ?? 0;
   },
 
   async getRecentDailyCounters(limit: number): Promise<IVisitCounter[]> {
-    const docs = await VisitCounterModel.find()
-      .sort({ dateKey: -1 })
-      .limit(limit);
-
-    return docs.reverse();
+    const docs = await prisma.visitCounter.findMany({
+      orderBy: { dateKey: "desc" },
+      take: limit,
+    });
+    return docs.reverse().map((doc) => ({ ...doc, _id: doc.id }));
   },
 };

@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRESQL_URL")
+}
+
+enum ProjectStatus {
+  DEV      @map("dev")
+  LIVE     @map("live")
+  DEP_LOCAL @map("dep-local")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("adminAuth")
+}
+
+model Project {
+  id         String   @id @default(cuid())
+  projectName String
+  role       String   @default("")
+  displayOrder Int    @default(1000)
+  imageFile  String
+  githubLink String
+  liveLink   String   @default("")
+  description String
+  techs      String[]
+  status     ProjectStatus @default(DEV)
+  isLive     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Certificate {
+  id          String   @id @default(cuid())
+  title       String
+  issuer      String
+  date        String
+  description String
+  imageUrl    String   @default("")
+  displayOrder Int    @default(1000)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model VisitCounter {
+  id        String   @id @default(cuid())
+  dateKey   String   @unique
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VisitEvent {
+  id          String   @id @default(cuid())
+  dateKey     String
+  fingerprint String
+  ipAddress   String   @default("")
+  userAgent   String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([dateKey, fingerprint])
+  @@index([dateKey])
+  @@index([fingerprint])
+}
