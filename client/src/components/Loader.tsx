@@ -4,46 +4,70 @@ interface LoaderProps {
   isLoading: boolean;
   setisLoading: Dispatch<SetStateAction<boolean>>;
 }
+
 const Loader = ({ isLoading, setisLoading }: LoaderProps) => {
-  const fullText = "welcome to my portfolio";
+  const fullText = "welcome to the Atlas portfolio";
   const [displayText, setDisplayText] = useState("");
   const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   useEffect(() => {
     if (!isLoading) return;
     let index = 0;
-    const interval = setInterval(() => {
+    let completionTimer = 0;
+    const interval = window.setInterval(() => {
       if (index < fullText.length) {
-        setDisplayText(fullText.substring(0, index + 1));
-        setLoadingPercentage(((index + 1) * 100) / fullText.length);
         index++;
+        setDisplayText(fullText.slice(0, index));
+        setLoadingPercentage((index / fullText.length) * 100);
       } else {
-        clearInterval(interval);
+        window.clearInterval(interval);
+        completionTimer = window.setTimeout(() => setisLoading(false), 350);
       }
-      if (index === fullText.length) {
-        setTimeout(() => setisLoading(false), 300);
-      }
-    }, 150);
-
-    return () => clearInterval(interval);
+    }, 95);
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(completionTimer);
+    };
   }, [isLoading, setisLoading]);
+
   return (
-    <div className="w-full flex flex-col items-center justify-center min-h-screen">
-      <div>
-        <h1 className="text-[#02a94c] transition-all text-center font-mono capitalize text-2xl md:text-3xl mb-4">
-          {displayText} {loadingPercentage < 100 ? <span>|</span> : null}
+    <main className="fixed inset-0 z-[100] flex min-h-screen items-center justify-center bg-[#001012] px-5 text-white">
+      <section
+        role="status"
+        aria-live="polite"
+        className="w-full max-w-md rounded-2xl border border-white/10 bg-[#06191a]/70 p-7 sm:p-10"
+      >
+        <p className="mb-5 text-xs font-medium uppercase tracking-[0.18em] text-gray-400">
+          Atlas portfolio
+        </p>
+        <h1 className="min-h-10 font-mono text-2xl font-semibold capitalize text-white sm:text-3xl">
+          {displayText}
+          <span
+            aria-hidden="true"
+            className="ml-1 animate-pulse text-[#02a94c]"
+          >
+            |
+          </span>
         </h1>
-        <div className="max-w-[20em] mx-3 sm:mx-auto sm:w-[20em] m-auto h-2 rounded-full border border-[#02a94c]">
+        <div className="mt-8 flex items-center justify-between text-sm text-gray-400">
+          <span>{loadingPercentage < 100 ? "Loading..." : "Ready"}</span>
+          <span className="tabular-nums">{Math.round(loadingPercentage)}%</span>
+        </div>
+        <div
+          role="progressbar"
+          aria-label="Portfolio loading"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(loadingPercentage)}
+          className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"
+        >
           <div
             style={{ width: `${loadingPercentage}%` }}
-            className="h-full bg-gradient-to-r from-0 to-[#02a94c] transition-all ease-in-out duration-200 rounded-r-full"
-          ></div>
-          <p className="text-center text-gray-400 font-mono mt-4">
-            {loadingPercentage < 100 ? "Initialising..." : "ready"}
-          </p>
+            className="h-full rounded-full bg-[#02a94c] transition-[width] duration-200 ease-out"
+          />
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
