@@ -20,7 +20,7 @@ export const socialIcons = [
     id: 1,
     icon: FaGithub,
     color: "#181717",
-    link: "https://github.com/vicious-franco",
+    link: "https://github.com/atlas-devel",
   },
   {
     id: 2,
