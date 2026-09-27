@@ -51,7 +51,7 @@ This project demonstrates my ability to build responsive, interactive, and maint
 Clone the repo and run locally:
 
 ```bash
-git clone https://github.com/vicious-franco/portfolio.git
+git clone https://github.com/atlas-devel/portfolio.git
 cd portfolio
 
 # Frontend
