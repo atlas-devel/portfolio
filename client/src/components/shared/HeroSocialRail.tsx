@@ -12,7 +12,7 @@ const HeroSocialRail = ({ items, onAdminClick }: HeroSocialRailProps) => (
         onClick={onAdminClick}
         className="cursor-pointer text-nowrap mt-4 hover:text-[#02a94c] transition-colors duration-300 -rotate-90 mb-6 text-sm font-semibold capitalize tracking-wider"
       >
-        V. franco
+        Atlas-Devel
       </span>
       <hr color="#c7cbd3" className="w-[1.8px] h-16 opacity-50" />
       <SocialLinks items={items} variant="sidebar" />
